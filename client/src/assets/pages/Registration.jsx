@@ -8,11 +8,11 @@ const Registration = () => {
 
   return (
     <div className="registration max-w-full h-screen flex flex-col items-center justify-center">
-      <div className="headerBox w-[30%] h-[8vh] bg-white rounded-lg my-3 flex items-center justify-center">
+      <div className="headerBox w-[280px] h-[8vh] bg-[#737377] md:bg-white rounded-lg mt-3 md:mt-3 flex items-center justify-center md:p-2">
         <span className="text-3xl font-semibold text">Light-Chat</span>
       </div>
 
-      <div className="registrationBox w-[30%] bg-white min-h-[80vh] rounded-lg my-3 flex flex-col items-center">
+      <div className="registrationBox md:w-[450px] w-[300px]  bg-white min-h-[90vh] rounded-lg my-3 flex flex-col items-center">
         <div className="navigator w-[90%] min-h-12  flex items-center justify-around p-3 my-4 bg-[#6f6f6f] rounded-lg text-white text-[18px] font-medium">
           
         <div className="LogIn hover:text-[24px] hover:font-bold ease-in-out duration-150" onClick={()=>{setRegister("login")}}>

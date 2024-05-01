@@ -32,7 +32,7 @@ function Login() {
       </div>
 
       <div className="submit w-full flex items-center justify-center">
-        <button class="px-4 py-2 font-semibold text-sm bg-sky-500 text-white rounded-md shadow-sm scale-95 hover:scale-110 ease-in-out duration-300">
+        <button className="px-4 py-2 font-semibold text-sm bg-sky-500 text-white rounded-md shadow-sm scale-110 hover:scale-125 ease-in-out duration-300">
           Log In
         </button>
       </div>
