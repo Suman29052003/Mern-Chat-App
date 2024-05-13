@@ -10,10 +10,6 @@ PORT = 6000 || process.env.PORT;
 
 app.use(express.json());
 
-app.get('/',(req,res)=>{
-    res.send("Hello World!");
-})
-
 app.use('/api/user',authRoutes)
 
 connectToMongoDB()
