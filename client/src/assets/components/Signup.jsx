@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import axios from "axios";
-import defaultPic from "../../../public/defaultPfp.jpg";
+import React, { useState,useNavi } from "react";
+import defaultPic from "/defaultPfp.jpg"; // Check if the path to the default profile picture is correct
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {useNavigate} from "react-router-dom"
+
 
 const Signup = () => {
   const [pic, setPic] = useState(null);
@@ -11,36 +12,21 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [userRegistered,setUserRegistered] = useState(false)
+
+  const usenavigate = useNavigate()
 
   const handleImgInput = (e) => {
     setPic(e.target.files[0]);
   };
 
-  const handleSignUp = async () => {
+  const handleSignUp = async (e) => {
+    e.preventDefault();
     setIsLoading(true);
 
     try {
-      // Password validation
       if (password !== confirmPassword) {
-        toast.error("Passwords do not match", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-        });
-        setIsLoading(false);
-        return;
-      }
-
-      // Email validation (example)
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        toast.error("Invalid email address", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-        });
+        toast.error("Passwords do not match");
         setIsLoading(false);
         return;
       }
@@ -51,48 +37,31 @@ const Signup = () => {
       formData.append("email", email);
       formData.append("password", password);
 
-      const response = await axios.post("http://localhost:3000/api/user", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      const response = await fetch("http://localhost:3000/api/user", {
+        method: "POST",
+        body: formData,
       });
 
-    if (response.data.success) {
-      toast.success("User Registered Successfully!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-      });
-    } else {
-      toast.error("User Registration failed", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-      });
+      if (response.ok) {
+        toast.success("User Registered Successfully!");
+        setUserRegistered(true);
+        usenavigate('/chats')
+      } else {
+        toast.error("User already exist! or Failed to Create User!");
+      }
+    } catch (err) {
+      console.log("Error during fetch request:", err);
+      toast.error("An error occurred during the request");
+    } finally {
+      setIsLoading(false);
     }
-  } catch (err) {
-    console.log("Error during Axios request:", err);
-    toast.error("An error occurred during the request", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-    });
-  } finally {
-    setIsLoading(false);
-  }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    handleSignUp();
   };
 
   return (
     <div>
-      <form className="text-lg" onSubmit={handleSubmit}>
+      <form className="text-lg" onSubmit={handleSignUp}>
+        {/* Form inputs */}
+
         {/* profilePicture */}
         <div className="profilePicture w-full h-[8vh] mt-7 flex flex-col justify-center items-center">
           <div className="w-[100px] h-[100px] bg-center">

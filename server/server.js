@@ -1,39 +1,37 @@
 const express = require('express');
-const dotenv = require('dotenv');
 const cors = require('cors');
+const multer = require('multer');
 const authRoutes = require("./routes/authRoutes");
 const connectToMongoDB = require('./database/dbConnection');
-const multer = require('multer'); // Import Multer for file uploads
+const dotenv = require('dotenv');
+dotenv.config()
 
-dotenv.config();
 
 const app = express();
 const PORT = 3000;
 
-// CORS configuration
-const corsOptions = {
-  origin: 'http://localhost:5173', // Adjust to your React app's origin
-  optionsSuccessStatus: 200,
-};
-app.use(cors(corsOptions));
-
-// Express middleware for parsing JSON body data
 app.use(express.json());
+app.use(cors());
 
-// Connect to MongoDB database (assuming a working `connectToMongoDB` function)
-connectToMongoDB(); // Ensure proper connection handling
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
 
-// Multer configuration for file uploads (adjust as needed)
-const upload = multer({ dest: 'uploads/' }); // Change 'uploads/' to your desired storage location
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5MB limit
+  }
+});
 
-// Auth routes with Multer middleware for handling profile picture uploads
-app.use('/api/user', upload.single('pic'), authRoutes); // Modify route path if needed
+app.use('/api/user', upload.single('pic'), authRoutes);
 
-// Error handling middleware (optional)
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ message: 'Internal Server Error' });
-  });
+connectToMongoDB();
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
