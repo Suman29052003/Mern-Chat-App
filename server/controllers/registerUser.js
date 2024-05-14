@@ -5,7 +5,8 @@ const generateToken = require('../config/generateToken')
 
 const registerUser = asyncHandler(async(req,res)=>{
     //get data from the req.body
-    const {name,email,password,pic} = req.body;
+    const {name,email,password} = req.body;
+    const pic = req.file?.path;
 
     // checking if all fields are filled
     if(!name|| !email|| !password){
@@ -38,6 +39,7 @@ const registerUser = asyncHandler(async(req,res)=>{
             _id:user._id,
             name:user.name,
             email:user.email,
+            pic: user.pic, // Include the pic field in the response
             token:generateToken(user._id)
         })
     }

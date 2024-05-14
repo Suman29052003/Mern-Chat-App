@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import defaultPfp from "../../../public/defaultPfp.jpg";
+import defaultPic from "../../../public/defaultPfp.jpg";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
-  const [profilePicture, setProfilePicture] = useState(null);
+  const [pic, setPic] = useState(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,7 +13,7 @@ const Signup = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleImgInput = (e) => {
-    setProfilePicture(e.target.files[0]);
+    setPic(e.target.files[0]);
   };
 
   const handleSignUp = async () => {
@@ -46,43 +46,43 @@ const Signup = () => {
       }
 
       const formData = new FormData();
+      formData.append("pic", pic);
       formData.append("name", name);
       formData.append("email", email);
       formData.append("password", password);
-      formData.append("pic", profilePicture);
 
-      const response = await axios.post("http://localhost:3000/api/user/", formData, {
+      const response = await axios.post("http://localhost:3000/api/user", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
-      if (response.status.success) {
-        toast.success("User Registered Successfully!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-        });
-      } else {
-        toast.error("User Registration failed", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-        });
-      }
-    } catch (err) {
-      console.log("User Registration failed", err);
-      toast.error("User Signup failed", {
+    if (response.data.success) {
+      toast.success("User Registered Successfully!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
       });
-    } finally {
-      setIsLoading(false);
+    } else {
+      toast.error("User Registration failed", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+      });
     }
+  } catch (err) {
+    console.log("Error during Axios request:", err);
+    toast.error("An error occurred during the request", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+    });
+  } finally {
+    setIsLoading(false);
+  }
   };
 
   const handleSubmit = (e) => {
@@ -96,7 +96,7 @@ const Signup = () => {
         {/* profilePicture */}
         <div className="profilePicture w-full h-[8vh] mt-7 flex flex-col justify-center items-center">
           <div className="w-[100px] h-[100px] bg-center">
-            <img src={profilePicture ? URL.createObjectURL(profilePicture) : defaultPfp} alt="" className="rounded-full" />
+            <img src={pic ? URL.createObjectURL(pic) : defaultPic} alt="" className="rounded-full" />
           </div>
           <div className="uploadPfp w-full flex justify-center items-center">
             <input
