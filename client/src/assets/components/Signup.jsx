@@ -14,6 +14,7 @@ const Signup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [userRegistered,setUserRegistered] = useState(false)
 
+
   const usenavigate = useNavigate()
 
   const handleImgInput = (e) => {
@@ -45,7 +46,7 @@ const Signup = () => {
       if (response.ok) {
         toast.success("User Registered Successfully!");
         setUserRegistered(true);
-        usenavigate('/chats')
+        
       } else {
         toast.error("User already exist! or Failed to Create User!");
       }
@@ -56,6 +57,15 @@ const Signup = () => {
       setIsLoading(false);
     }
   };
+
+  if(userRegistered){
+    setTimeout(()=>{
+      usenavigate('/chats')
+    },1000)
+  }
+  else{
+    useNavigate('/')
+  }
 
   return (
     <div>

@@ -6,6 +6,7 @@ import Registration from '../src/assets/pages/Registration.jsx'
 import { createBrowserRouter,RouterProvider } from 'react-router-dom'
 import Chats from './assets/pages/Chats.jsx'
 
+
 const router = createBrowserRouter([{
   path:"/",
   element : <Registration/>
