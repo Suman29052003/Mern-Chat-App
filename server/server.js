@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
 const authRoutes = require("./routes/authRoutes");
+const chatRoutes = require("./routes/chatRoute")
 const connectToMongoDB = require('./database/dbConnection');
 const dotenv = require('dotenv');
 dotenv.config()
@@ -30,6 +31,7 @@ const upload = multer({
 });
 
 app.use('/api/user', upload.single('pic'), authRoutes);
+app.use('/api/chat',chatRoutes)
 
 connectToMongoDB();
 

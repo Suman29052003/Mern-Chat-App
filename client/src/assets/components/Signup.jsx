@@ -1,5 +1,5 @@
 import React, { useState,useNavi } from "react";
-import defaultPic from "/defaultPfp.jpg"; // Check if the path to the default profile picture is correct
+import defaultPic from "/defaultPfp.jpg";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {useNavigate} from "react-router-dom"
@@ -15,7 +15,7 @@ const Signup = () => {
   const [userRegistered,setUserRegistered] = useState(false)
 
 
-  const usenavigate = useNavigate()
+  const navigate = useNavigate()
 
   const handleImgInput = (e) => {
     setPic(e.target.files[0]);
@@ -44,11 +44,11 @@ const Signup = () => {
       });
 
       if (response.ok) {
-        toast.success("User Registered Successfully!");
         setUserRegistered(true);
+        toast.success("User Registered Successfully!");
         
       } else {
-        toast.error("User already exist! or Failed to Create User!");
+        toast.error("User already exist or Failed to Create User!");
       }
     } catch (err) {
       console.log("Error during fetch request:", err);
@@ -60,11 +60,11 @@ const Signup = () => {
 
   if(userRegistered){
     setTimeout(()=>{
-      usenavigate('/chats')
-    },1000)
+      navigate('/chats')
+    },100)
   }
   else{
-    useNavigate('/')
+    navigate('/')
   }
 
   return (
