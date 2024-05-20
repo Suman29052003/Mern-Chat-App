@@ -1,4 +1,4 @@
-import React, { useState,useNavi } from "react";
+import React, { useState,useNavi, useEffect } from "react";
 import defaultPic from "/defaultPfp.jpg";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,7 +15,17 @@ const Signup = () => {
   const [userRegistered,setUserRegistered] = useState(false)
 
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userRegistered) {
+      const timeout = setTimeout(() => {
+        navigate('/chats');
+      }, 1000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [userRegistered, navigate]);
 
   const handleImgInput = (e) => {
     setPic(e.target.files[0]);
@@ -46,9 +56,8 @@ const Signup = () => {
       if (response.ok) {
         setUserRegistered(true);
         toast.success("User Registered Successfully!");
-        
       } else {
-        toast.error("User already exist or Failed to Create User!");
+        toast.error("User already exists or Failed to Create User!");
       }
     } catch (err) {
       console.log("Error during fetch request:", err);
@@ -57,15 +66,6 @@ const Signup = () => {
       setIsLoading(false);
     }
   };
-
-  if(userRegistered){
-    setTimeout(()=>{
-      navigate('/chats')
-    },100)
-  }
-  else{
-    navigate('/')
-  }
 
   return (
     <div>

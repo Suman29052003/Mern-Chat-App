@@ -9,13 +9,13 @@ const Navbar = () => {
         </div>
 
         <div className="text-white">
-          <span class="material-symbols-outlined  scale-[1.5] p-3 cursor-pointer">
+          <span className="material-symbols-outlined  scale-[1.5] p-3 cursor-pointer">
             notifications
           </span>
-          <span class="material-symbols-outlined  scale-[1.5] p-3 cursor-pointer">
+          <span className="material-symbols-outlined  scale-[1.5] p-3 cursor-pointer">
             person
           </span>
-          <span class="material-symbols-outlined  scale-[1.5] p-3 cursor-pointer">
+          <span className="material-symbols-outlined  scale-[1.5] p-3 cursor-pointer">
             keyboard_arrow_down
           </span>
         </div>

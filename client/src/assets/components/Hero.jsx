@@ -23,12 +23,12 @@ const Hero = () => {
             className="flex bg-slate-100 text-black p-2 rounded-md scale-95 transition-transform duration-300 ease-in-out hover:scale-100"
             onClick={handleNewGroupChat}
           >
-            New Group Chat <span class="material-symbols-outlined">add</span>
+            New Group Chat <span className="material-symbols-outlined">add</span>
           </button>
         </div>
 
         <div className="my-4 ml-2 text-white text-2xl p-4 rounded-3xl bg-slate-600">
-          <span class="material-symbols-outlined  scale-[1.5]">search</span>
+          <span className="material-symbols-outlined  scale-[1.5]">search</span>
           <input
             type="text"
             className="bg-transparent outline-none ml-2 text-white"
@@ -46,9 +46,13 @@ const Hero = () => {
             className="bg-white p-2 rounded-full flex items-center justify-between "
             onClick={handleVisbility}
           >
-            <span class="material-symbols-outlined scale-[1] text-black">
-              visibility
-            </span>
+            {visibility ? (
+              <span className="material-symbols-outlined">visibility_off</span>
+            ) : (
+              <span className="material-symbols-outlined scale-[1] text-black">
+                visibility
+              </span>
+            )}
           </button>
         </div>
 
@@ -63,7 +67,7 @@ const Hero = () => {
             className=" w-full bg-transparent outline-0 p-2 text-xl"
             placeholder="Enter Your Message"
           />
-          <span class="material-symbols-outlined p-3 bg-slate-500 rounded-full text-white cursor-pointer">
+          <span className="material-symbols-outlined p-3 bg-slate-500 rounded-full text-white cursor-pointer">
             send
           </span>
         </div>
