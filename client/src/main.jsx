@@ -1,56 +1,9 @@
-// import React from "react";
-// import ReactDOM from "react-dom/client";
-// import App from "./App.jsx";
-// import "./index.css";
-// import Registration from "../src/assets/pages/Registration.jsx";
-// import { createBrowserRouter, RouterProvider } from "react-router-dom";
-// import Chats from "./assets/pages/Chats.jsx";
-// import ChatProvider from "../src/context/ChatProvider.jsx";
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import "../src/index.css"
+import AppRouter from "../src/router/AppRouter" // Import the new AppRouter component
 
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <Registration />,
-//   },
-//   {
-//     path: "/chats",
-//     element: (
-//       <ChatProvider>
-//         <Chats />,
-//       </ChatProvider>
-//     ),
-//   },
-// ]);
+const rootElement = document.getElementById('root');
+const root = createRoot(rootElement);
 
-// ReactDOM.createRoot(document.getElementById("root")).render(
-//   <React.StrictMode>
-//     <RouterProvider router={router} />
-//   </React.StrictMode>
-// );
-
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import Registration from "../src/assets/pages/Registration.jsx";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Chats from "./assets/pages/Chats.jsx";
-import ChatProvider from "../src/context/ChatProvider.jsx";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Registration />,
-  },
-  {
-    path: "/chats",
-    element: (
-        <Chats />
-    ),
-  },
-]);
-
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <ChatProvider>
-    <RouterProvider router={router} />
-  </ChatProvider>
-);
+root.render(<AppRouter />);

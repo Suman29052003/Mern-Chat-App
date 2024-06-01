@@ -31,7 +31,7 @@ const Registration = () => {
           
         </div>
 
-        <div className="form w-[90%]">
+        <div className="form w-[90%] h-[50%]">
           {
             register === "login"?<Login/>
             :<Signup/>
